@@ -418,6 +418,9 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
         switch (entrada_user)
         {
         case 1:
+
+        {
+
             int entrada_id = 0;
 
             printf("Opção escolhida -> pesquisar por ID.\n");
@@ -425,6 +428,7 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
             scanf("%d", &entrada_id);
             limpa_buffer();
             pesquisa_id(dataset, entrada_id);
+        }
             break;
         case 2:
             // trabalhar com strings em C pode ser desafiador, melhor inicializar o vetor 0 e procurar alguma forma de tornar a entrada do
@@ -432,6 +436,7 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
             // podemos usar as funções do trabalho do zoologico. Verificar
 
             // lembrar de implementar um limpa buffer.
+            {
             limpa_buffer();
             char entrada_origem[30];
             printf("Opção escolhida -> pesquisar por Origem.\n");
@@ -458,11 +463,13 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
             printf("Origem: %s\n\n", entrada_origem);
 
             pesquisa_origem(dataset, entrada_origem);
+            }
 
             break;
         case 3:
-            int escolhe_id = 0;
-            char escolhe_origem[30];
+            {
+            int entrada_id = 0;
+            char entrada_origem[30];
 
             printf("Opção escolhida: busca mais específica (ID e Origem).\n");
             printf("Digite o ID que deseja pesquisar: ");
@@ -476,6 +483,7 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
 
             limpa_buffer();
 
+            }
             // Aqui você pode adicionar a lógica para pesquisa por ID e Origem
             break;
         case 4:
@@ -514,32 +522,39 @@ void apresentaMenu(pizzaDataset dataset[])
         {
         case 1:
             printf("Metodo selecionado: Selection Sort\n");
+            {
             printAntesDepois(dataset); // essa função só imprime o vetor antes e depois da ordenação, nada mais que isso.
             selectionSort(dataset, 30);
             imprime(dataset);
+            }
             break; // lembrar de quebrar o switch
 
         case 2:     
             printf("Metodo selecionado: Insertion Sort\n");
+            {
             printAntesDepois(dataset);
             ordena_Insercao(dataset, 30);
             imprime(dataset);
+            }
             break;
 
         case 3: //
             printf("Metodo selecionado: Busca Sequencial\n");
+            {
             selecionaOquePesquisar(dataset); // função que pede ao usuário o que ele deseja pesquisar, está se tornando uma verdadeira toca de coelho
-
+            }
             break;
 
         case 4:
             printf("Metodo selecionado: Busca Binária\n");
+            {
             int entrada_id;
             printf("Entre com o ID que deseja pesquisar: ");
             scanf("%d", &entrada_id);
             // Ordena o array antes de realizar a busca binária
             selectionSort(dataset, 30);
             busca_binaria(dataset, 30, entrada_id);
+            }
             break;
         }
 
