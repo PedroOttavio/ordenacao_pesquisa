@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <locale.h>
 struct pizzaDataset
 {
     int id;
@@ -240,9 +239,9 @@ void imprime(pizzaDataset vet[])
 
 void printAntesDepois(pizzaDataset vetor[])
 {
-    printf("\nVetor antes da ordenação:\n");
+    printf("\nVetor antes da ordenacao:\n");
     imprime(vetor);
-    printf("\nDepois da ordenação: \n");
+    printf("\nDepois da ordenacao: \n");
 }
 
 void ordena_Insercao(pizzaDataset dataset[], int quantidade_elementos)
@@ -258,41 +257,6 @@ void ordena_Insercao(pizzaDataset dataset[], int quantidade_elementos)
         dataset[j + 1].id = aux;
     }
 }
-
-// void busca_binaria(pizzaDataset dataset[], int quantidade_elementos, int id_procurado) // enfim, a busca binária
-// {
-//     int inicio = 0;
-//     int meio;
-//     int fim = quantidade_elementos - 1;
-
-//     selectionSort(dataset, 30);
-
-//     while (inicio <= fim)
-//     {
-
-//         meio = (inicio + fim) / 2;
-
-//         if (dataset[meio].id == id_procurado)
-//         {
-//             printf("\nDados:\nID: %d\n", dataset[meio].id);
-//             printf("Nome: %s\n", dataset[meio].nome);
-//             printf("Ingredientes: %s\n", dataset[meio].ingredientes);
-//             printf("Ranking: %.1f\n", dataset[meio].ranking);
-//             printf("Origem: %s\n", dataset[meio].origem);
-//             printf("\n");
-//             return;
-//         }
-//         else if (dataset[meio].id < id_procurado)
-//         {
-//             inicio = meio + 1;
-//         }
-//         else
-//         {
-//             fim = meio - 1;
-//         }
-//     }
-//     printf("ID não encontrado.\n");
-// }
 
 void busca_binaria(pizzaDataset dataset[], int quantidade_elementos, int id_procurado)
 {
@@ -409,9 +373,9 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
         printf("\nEscolha o que deseja pesquisar: \n");
         printf("1 - ID\n");
         printf("2 - Origem\n");
-        printf("3 - Uma busca mais específica (ID e origem)\n");
+        printf("3 - Uma busca mais especifica (ID e origem)\n");
         printf("4 - Sair\n");
-        printf("Insira a opção desejada: ");
+        printf("Insira a opcao desejada: ");
         scanf("%d", &entrada_user);
 
         // Verifica a escolha do usuário
@@ -471,7 +435,7 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
             int entrada_id = 0;
             char entrada_origem[30];
 
-            printf("Opção escolhida: busca mais específica (ID e Origem).\n");
+            printf("Opção escolhida: busca mais especifica (ID e Origem).\n");
             printf("Digite o ID que deseja pesquisar: ");
             scanf("%d", &entrada_id);
             limpa_buffer();
@@ -507,13 +471,13 @@ void apresentaMenu(pizzaDataset dataset[])
         do
         { // usuario escolhe uma das opções, então sai desse do while interno, entre no switch e executa a respectiva função;
 
-            printf("Menu de opções:\n");
-            printf("1 - Metodo de ordenação usando Selection Sort\n");
-            printf("2 - Metodo de ordenação usando Insertion Sort\n");
+            printf("Menu de opcoes:\n");
+            printf("1 - Metodo de ordenacao usando Selection Sort\n");
+            printf("2 - Metodo de ordenacao usando Insertion Sort\n");
             printf("3 - Realizar uma busca sequencial\n");
-            printf("4 - Realizar uma busca binária\n");
+            printf("4 - Realizar uma busca binaria\n");
             printf("5 - Sair\n");
-            printf("Insira a opção desejada: ");
+            printf("Insira a opcao desejada: ");
             scanf("%d", &entrada_user);
 
         } while (entrada_user < 1 || entrada_user > 5); // enquanto o o valor inserido pelo usuario for incorreto, continuará pedindo.
@@ -546,7 +510,7 @@ void apresentaMenu(pizzaDataset dataset[])
             break;
 
         case 4:
-            printf("Metodo selecionado: Busca Binária\n");
+            printf("Metodo selecionado: Busca Binaria\n");
             {
             int entrada_id;
             printf("Entre com o ID que deseja pesquisar: ");
@@ -564,7 +528,6 @@ void apresentaMenu(pizzaDataset dataset[])
 int main()
 {
 
-    setlocale(LC_ALL, "Portuguese");
     pizzaDataset dataset[30]; // Vetor com 30 elementos
 
     // Chama a função para preencher o vetor com os dados
