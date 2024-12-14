@@ -5,9 +5,14 @@ struct pizzaDataset {
     int id;
     char nome[20];
     char ingredientes[100];
-    float ranking;
+    double ranking; //trocado para double, tava dando um código de erro*
     char origem[20];
 };
+
+//código de erro:
+//main.c:192:27: warning: conversion from ‘double’ to ‘float’ changes value from 
+//‘4.2000000000000002e+0’ to ‘4.19999981e+0f’ [-Wfloat-conversion]
+
 
 // Função para preencher o vetor com os dados do dataset
 void inserirPizzas(struct pizzaDataset dataset[]) {
