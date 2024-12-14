@@ -246,8 +246,6 @@ void printAntesDepois(pizzaDataset vetor[])
     printf("\nDepois da ordenação: \n");
 }
 
-
-
 void ordena_Insercao(pizzaDataset dataset[], int quantidade_elementos)
 {
     int i, j, aux;
@@ -262,6 +260,74 @@ void ordena_Insercao(pizzaDataset dataset[], int quantidade_elementos)
     }
 }
 
+void pesquisa_id(pizzaDataset dataset[], int id_procurado)
+{
+    int i;
+    for (i = 0; i < 30; i++)
+    {
+        if (dataset[i].id == id_procurado)
+        {
+            printf("\nDados:\nID: %d\n", dataset[i].id);
+            printf("Nome: %s\n", dataset[i].nome);
+            printf("Ingredientes: %s\n", dataset[i].ingredientes);
+            printf("Ranking: %.1f\n", dataset[i].ranking);
+            printf("Origem: %s\n", dataset[i].origem);
+            printf("\n");
+        }
+
+    }
+}
+
+
+void selecionaOquePesquisar(pizzaDataset dataset[])
+{
+    int entrada_user = 0;
+
+    do
+    {
+        // Exibe o menu
+        printf("\nEscolha o que deseja pesquisar: \n");
+        printf("1 - ID\n");
+        printf("2 - Origem\n");
+        printf("3 - Uma busca mais específica (ID e origem)\n");
+        printf("4 - Sair\n");
+        printf("Insira a opção desejada: ");
+        scanf("%d", &entrada_user);
+
+        // Verifica a escolha do usuário
+        switch (entrada_user)
+        {
+        case 1:
+            int entrada_id = 0;
+
+            printf("Opção escolhida: pesquisar por ID.\n");
+            printf("Digite o ID que deseja pesquisar: ");
+            scanf("%d", &entrada_id);
+            pesquisa_id(dataset, entrada_id);
+
+            // Aqui você pode adicionar a lógica para pesquisa por ID
+            break;
+        case 2:
+            printf("Opção escolhida: pesquisar por Origem.\n");
+            // Aqui você pode adicionar a lógica para pesquisa por Origem
+            break;
+        case 3:
+            printf("Opção escolhida: busca mais específica (ID e Origem).\n");
+            // Aqui você pode adicionar a lógica para pesquisa por ID e Origem
+            break;
+        case 4:
+            printf("Saindo do menu de pesquisa..\n");
+            return; // Sai da função se o usuário escolher 4
+        default:
+            printf("Opção inválida. Por favor, tente novamente.\n");
+            break;
+        }
+
+    } while (entrada_user != 4); // aperte para sair se quiser sair, caso contrário, continue..
+}
+
+
+
 void apresentaMenu(pizzaDataset dataset[])
 {
 
@@ -275,6 +341,8 @@ void apresentaMenu(pizzaDataset dataset[])
             printf("Menu de opções:\n");
             printf("1 - Metodo de ordenação usando Selection Sort\n");
             printf("2 - Metodo de ordenação usando Insertion Sort\n");
+            printf("3 - Realizar uma busca sequencial\n");
+            printf("4 - Realizar uma busca binária\n");
             printf("5 - Sair\n");
             printf("Insira a opção desejada: ");
             scanf("%d", &entrada_user);
@@ -295,6 +363,12 @@ void apresentaMenu(pizzaDataset dataset[])
             printAntesDepois(dataset);
             ordena_Insercao(dataset, 30);
             imprime(dataset);
+            break;
+
+        case 3: //
+            printf("Metodo selecionado: Busca Sequencial\n");
+            selecionaOquePesquisar(dataset); // função que pede ao usuário o que ele deseja pesquisar, está se tornando uma verdadeira toca de coelho
+
             break;
         }
 
