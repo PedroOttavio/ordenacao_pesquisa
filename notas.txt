@@ -1,0 +1,3 @@
+- implementar vetores ou listas;
+- ordenar e pesquisar por dados conforme entrada do usuário
+- dois métodos de ordenação para organizar tudo.

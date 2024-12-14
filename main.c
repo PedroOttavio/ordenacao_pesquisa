@@ -1,21 +1,25 @@
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
 
-struct pizzaDataset {
+struct pizzaDataset
+{
     int id;
     char nome[20];
     char ingredientes[100];
-    double ranking; //trocado para double, tava dando um código de erro*
+    double ranking; // trocado para double, tava dando um código de erro*
     char origem[20];
 };
 
-//código de erro:
-//main.c:192:27: warning: conversion from ‘double’ to ‘float’ changes value from 
-//‘4.2000000000000002e+0’ to ‘4.19999981e+0f’ [-Wfloat-conversion]
+typedef struct pizzaDataset pizzaDataset;
 
+// código de erro:
+// main.c:192:27: warning: conversion from ‘double’ to ‘float’ changes value from
+// ‘4.2000000000000002e+0’ to ‘4.19999981e+0f’ [-Wfloat-conversion]
 
 // Função para preencher o vetor com os dados do dataset
-void inserirPizzas(struct pizzaDataset dataset[]) {
+void inserirPizzas(pizzaDataset dataset[])
+{
     // Preenchendo todos os registros
     dataset[0].id = 9;
     strcpy(dataset[0].nome, "Bacon e Cheddar");
@@ -198,24 +202,114 @@ void inserirPizzas(struct pizzaDataset dataset[]) {
     strcpy(dataset[29].origem, "Italia");
 }
 
-int main() {
-    struct pizzaDataset dataset[30]; // Vetor com 30 elementos
+
+// função de ordenação, adaptada da função do arquivo ordenaSelecao que o professor disponibilizou
+void selectionSort(pizzaDataset dataset[], int num_elementos)
+{
+    int i, j, min, aux;
+
+    for (i = 0; i < num_elementos - 1; i++)
+    {
+
+        min = i;
+        for (j = i + 1; j < num_elementos; j++)
+        {
+            if (dataset[j].id < dataset[min].id) // verifficar qual parametro utilizar para comparar e ordenar
+            {
+                min = j;
+            }
+
+        } // aux recebe o valor de id da posição i
+
+        aux = dataset[i].id;
+        dataset[i].id = dataset[min].id;
+        dataset[min].id = aux;
+    }
+}
+
+void imprime(pizzaDataset vet[])
+{
+    int count = 0;
+
+    printf("\n");
+
+    for (count = 0; count < 30; count++)
+    {
+        printf("%d ", vet[count].id);
+    }
+    printf("\n\n");
+}
+
+void printAntesDepois(pizzaDataset vetor[])
+{
+    printf("Vetor antes da ordenação:\n");
+    imprime(vetor);
+    printf("\nDepois da ordenação: \n");
+}
+
+// função de ordenação, adaptada da função do arquivo ordenaInsercao que o professor disponibilizou. Time que tá ganhando não se mexe.
+void insertionSort(pizzaDataset dataset[], int num_elementos){  
+    int i, j, aux;
+
+    for( i = 1; i < num_elementos; i++){
+        aux = dataset[i].id;
+
+        for( j = i - 1; j >= 0 && aux < dataset[j].id; j++){
+            dataset[j + 1].id = dataset[j].id;
+        }
+        dataset[j + 1].id = aux;
+    }
+}
+
+void apresentaMenu(pizzaDataset dataset[])
+{
+
+    int entrada_user = 0; // iniciado o valor
+
+    do
+    {
+        do
+        { // usuario escolhe uma das opções, então sai desse do while interno, entre no switch e executa a respectiva função;
+
+            printf("Menu de opções:\n");
+            printf("1 - Metodo de ordenação usando Selection Sort\n");
+            printf("2 - Metodo de ordenação usando Insertion Sort\n");
+            printf("5 - Sair\n");
+            printf("Insira a opção desejada: ");
+            scanf("%d", &entrada_user);
+
+        } while (entrada_user < 1 || entrada_user > 5); // enquanto o o valor inserido pelo usuario for incorreto, continuará pedindo.
+
+        switch (entrada_user)
+        {
+        case 1:
+            printf("Metodo selecionado: Selection Sort\n");
+            printAntesDepois(dataset); // essa função só imprime o vetor antes e depois da ordenação, nada mais que isso.
+            selectionSort(dataset, 30);
+            imprime(dataset);
+            break; //lembrar de quebrar o switch, se não da problema de segmentação
+
+        case 2:
+            printf("Metodo selecionado: Insertion Sort\n");
+            printAntesDepois(dataset);
+            insertionSort(dataset, 30);
+            imprime(dataset);
+            break;
+        }
+
+    } while (entrada_user != 5); // digite 5 para sair
+}
+
+int main()
+{
+
+    setlocale(LC_ALL, "");
+    pizzaDataset dataset[30]; // Vetor com 30 elementos
 
     // Chama a função para preencher o vetor com os dados
     inserirPizzas(dataset);
 
-    // Exemplo de impressão para verificar os dados inseridos
-    for (int i = 0; i < 30; i++) {
-    	printf("\n");
-    	printf("ID: %d\n", dataset[i].id);
-        printf("Nome:");
-        puts(dataset[i].nome);
-		printf("Ingredientes:");
-		puts(dataset[i].ingredientes);
-		printf("Ranking: %.1f\n", dataset[i].ranking);
-		printf("Origem: "); 
-		puts(dataset[i].origem);
-    }
+    apresentaMenu(dataset);
 
     return 0;
 }
