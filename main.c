@@ -564,7 +564,7 @@ void apresentaMenu(pizzaDataset dataset[])
 int main()
 {
 
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "Portuguese");
     pizzaDataset dataset[30]; // Vetor com 30 elementos
 
     // Chama a função para preencher o vetor com os dados
