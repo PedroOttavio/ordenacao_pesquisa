@@ -202,7 +202,6 @@ void inserirPizzas(pizzaDataset dataset[])
     strcpy(dataset[29].origem, "Italia");
 }
 
-
 // função de ordenação, adaptada da função do arquivo ordenaSelecao que o professor disponibilizou
 void selectionSort(pizzaDataset dataset[], int num_elementos)
 {
@@ -242,19 +241,21 @@ void imprime(pizzaDataset vet[])
 
 void printAntesDepois(pizzaDataset vetor[])
 {
-    printf("Vetor antes da ordenação:\n");
+    printf("\nVetor antes da ordenação:\n");
     imprime(vetor);
     printf("\nDepois da ordenação: \n");
 }
 
-// função de ordenação, adaptada da função do arquivo ordenaInsercao que o professor disponibilizou. Time que tá ganhando não se mexe.
-void insertionSort(pizzaDataset dataset[], int num_elementos){  
+
+
+void ordena_Insercao(pizzaDataset dataset[], int quantidade_elementos)
+{
     int i, j, aux;
-
-    for( i = 1; i < num_elementos; i++){
+    for (i = 1; i < quantidade_elementos; i++)
+    {
         aux = dataset[i].id;
-
-        for( j = i - 1; j >= 0 && aux < dataset[j].id; j++){
+        for (j = i - 1; j >= 0 && aux < dataset[j].id; j--)
+        {
             dataset[j + 1].id = dataset[j].id;
         }
         dataset[j + 1].id = aux;
@@ -287,12 +288,12 @@ void apresentaMenu(pizzaDataset dataset[])
             printAntesDepois(dataset); // essa função só imprime o vetor antes e depois da ordenação, nada mais que isso.
             selectionSort(dataset, 30);
             imprime(dataset);
-            break; //lembrar de quebrar o switch, se não da problema de segmentação
+            break; // lembrar de quebrar o switch
 
         case 2:
             printf("Metodo selecionado: Insertion Sort\n");
             printAntesDepois(dataset);
-            insertionSort(dataset, 30);
+            ordena_Insercao(dataset, 30);
             imprime(dataset);
             break;
         }
