@@ -1,7 +1,11 @@
 
 Algumas particularidades do código:
 
-- quando selecionamos o método de pesquisa sequencial por origem e inserimos o pais, precisamos dar dois ENTER para aparecer o resultado, a hipótese é que, ao tirar o ENTER do fgets e scanf, acabamos tendo esse efeito colateral, vou tentar resolver depois, se houver tempo.
+- quando selecionamos o método de pesquisa sequencial por origem e inserimos o pais, precisamos dar dois ENTER para 
+aparecer o resultado, a hipótese é que, ao tirar o ENTER do fgets e scanf, acabamos tendo esse efeito colateral, mas 
+foi necessario pois ,caso o contrário, a inserção de dados ficaria comprometida, uma vez que o próximo scanf ocuparia 
+o lugar que o usuário iria inserir o valor
+
 
 -
 
