@@ -260,7 +260,7 @@ void ordena_Insercao(pizzaDataset dataset[], int quantidade_elementos)
     }
 }
 
-void pesquisa_id(pizzaDataset dataset[], int id_procurado)
+void pesquisa_id(pizzaDataset dataset[], int id_procurado) // funcao para pesquisar pelo id passado pelo usuario, funcionando;
 {
     int i;
     for (i = 0; i < 30; i++)
@@ -274,10 +274,59 @@ void pesquisa_id(pizzaDataset dataset[], int id_procurado)
             printf("Origem: %s\n", dataset[i].origem);
             printf("\n");
         }
-
     }
 }
 
+void busca_id_origem(pizzaDataset dataset[], int entrada_id,char entrada_origem[]){
+    int i;
+    for (i = 0; i < 30; i++){
+        if(dataset[i].id == entrada_id && strcmp(dataset[i].origem, entrada_origem) == 0){
+            printf("\nDados:\nID: %d\n", dataset[i].id);
+            printf("Nome: %s\n", dataset[i].nome);
+            printf("Ingredientes: %s\n", dataset[i].ingredientes);
+            printf("Ranking: %.1f\n", dataset[i].ranking);
+            printf("Origem: %s\n", dataset[i].origem);
+            printf("\n");
+        }
+    }
+}
+
+
+
+// funções funcionando, passar para cima, cuidar com a ordem, se a ficar muito ruim de gerenciar, talvez seja necessário colocar em outro arquivo.
+
+void limpa_buffer()                            //Essa função é responsável por limpar o buffer de entrada;
+{                                              //tentei utilizar o fflush, mas infelizmente não funcionou muito bem, em algumas horas funcionava
+                                              //e em outras dava erro, achando pouco confiável, acabei optando por procurar outra 
+                                              //alternativa para limpar o stdin;
+    int c;                                    //Encontrei essa função enquanto navegava no Stackoverflow, a pergunta respondida  era:
+    do {                                      // "Limpar buffer em C com fflush() ou __fpurge()" e "How can I clear an input buffer in C?"
+        c = getchar();                        
+    } while (c != '\n' && c != EOF);            //o EOF é um valor retornado por funções como fgets, ele existe para indicar o final de um arquivo ou entrada. 
+}                                             //As perguntas podem serem acessadas através dos seguintes links: 
+                                              //"Limpar buffer em C com fflush() ou __fpurge()"
+                                              //https://pt.stackoverflow.com/questions/111697/limpar-buffer-em-c-com-fflush-ou-fpurge
+                                              //"How can I clear an input buffer in C?"  
+                                              //https://stackoverflow.com/questions/7898215/how-can-i-clear-an-input-buffer-in-c
+
+
+void pesquisa_origem(pizzaDataset dataset[], char origem_procurada[]) // espero que funcione.
+{
+    int i;
+
+    for (i = 0; i < 30; i++)
+    {
+        if (strcmp(dataset[i].origem, origem_procurada) == 0)
+        {
+            printf("\nDados:\nID: %d\n", dataset[i].id);
+            printf("Nome: %s\n", dataset[i].nome);
+            printf("Ingredientes: %s\n", dataset[i].ingredientes);
+            printf("Ranking: %.1f\n", dataset[i].ranking);
+            printf("Origem: %s\n", dataset[i].origem);
+            printf("\n");
+        }
+    }
+}
 
 void selecionaOquePesquisar(pizzaDataset dataset[])
 {
@@ -300,19 +349,63 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
         case 1:
             int entrada_id = 0;
 
-            printf("Opção escolhida: pesquisar por ID.\n");
+            printf("Opção escolhida -> pesquisar por ID.\n");
             printf("Digite o ID que deseja pesquisar: ");
             scanf("%d", &entrada_id);
+            limpa_buffer();
             pesquisa_id(dataset, entrada_id);
-
-            // Aqui você pode adicionar a lógica para pesquisa por ID
             break;
         case 2:
-            printf("Opção escolhida: pesquisar por Origem.\n");
-            // Aqui você pode adicionar a lógica para pesquisa por Origem
+            // trabalhar com strings em C pode ser desafiador, melhor inicializar o vetor 0 e procurar alguma forma de tornar a entrada do
+            // usuário mais confiável, verificar manipulações com fgets e limpeza de buffer,
+            // podemos usar as funções do trabalho do zoologico. Verificar
+
+            // lembrar de implementar um limpa buffer.
+            limpa_buffer();
+            char entrada_origem[30];
+            printf("Opção escolhida -> pesquisar por Origem.\n");
+            printf("Digite a origem que deseja pesquisar: ");
+            // Não sou inteligente o bastante para pensar sozinho nessas soluções, então o link para os exemplos de fgets usados nessa
+            // função podem ser encontrados em : https://stackoverflow.com/questions/38767967/clear-input-buffer-after-fgets-in-c
+            //  e também em: https://pt.stackoverflow.com/questions/111697/limpar-buffer-em-c-com-fflush-ou-fpurge
+
+            // if(fgets(entrada_origem, sizeof(entrada_origem), stdin)){   implementação anterior, se a nova não funcionar, voltar pra essa
+            //     size_t len = strlen(entrada_origem);                 // Essa opção pareceu um pouco rebuscada
+            //     if(len > 0 && entrada_origem[len - 1] == '\n'){      //vou usar a do zoologico, tinha ficado bem enxuta e clara.
+            //         entrada_origem[len - 1] = '\0';
+            //     }
+            // }
+            fgets(entrada_origem, sizeof(entrada_origem), stdin); // recebe o input do usuario, verifica o tamanho, avisamos que é
+            entrada_origem[strcspn(entrada_origem, "\n")] = '\0'; // receberá os valores via teclado, em seguida usamos a função strcspn
+            // para encontrar e trocar o \n por um caractere nulo. Obrigado pelas pesquisas Eu do passado!
+
+            //é, precisa implementar o limpa buffer antes; - Pedro. 
+            //Reaproveitar o código do zoologico - Pedro.
+
+            limpa_buffer(); // limpa o buffer de entrada, para evitar que interfira no scanf 
+
+            printf("Origem: %s\n\n", entrada_origem);
+
+            pesquisa_origem(dataset, entrada_origem);
+
             break;
         case 3:
+            int escolhe_id = 0;
+            char escolhe_origem[30];
+
             printf("Opção escolhida: busca mais específica (ID e Origem).\n");
+            printf("Digite o ID que deseja pesquisar: ");
+            scanf("%d", &entrada_id);
+            limpa_buffer();
+            printf("Digite a origem que deseja pesquisar: ");
+            fgets(entrada_origem, sizeof(entrada_origem), stdin); // recebe o input do usuario, verifica o tamanho, avisamos que é
+            entrada_origem[strcspn(entrada_origem, "\n")] = '\0';
+
+            busca_id_origem(dataset, entrada_id, entrada_origem);
+
+            limpa_buffer(); 
+
+
             // Aqui você pode adicionar a lógica para pesquisa por ID e Origem
             break;
         case 4:
@@ -325,8 +418,6 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
 
     } while (entrada_user != 4); // aperte para sair se quiser sair, caso contrário, continue..
 }
-
-
 
 void apresentaMenu(pizzaDataset dataset[])
 {
