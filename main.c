@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <locale.h>
-
 struct pizzaDataset
 {
     int id;
@@ -260,6 +259,77 @@ void ordena_Insercao(pizzaDataset dataset[], int quantidade_elementos)
     }
 }
 
+// void busca_binaria(pizzaDataset dataset[], int quantidade_elementos, int id_procurado) // enfim, a busca binária
+// {
+//     int inicio = 0;
+//     int meio;
+//     int fim = quantidade_elementos - 1;
+
+//     selectionSort(dataset, 30);
+
+//     while (inicio <= fim)
+//     {
+
+//         meio = (inicio + fim) / 2;
+
+//         if (dataset[meio].id == id_procurado)
+//         {
+//             printf("\nDados:\nID: %d\n", dataset[meio].id);
+//             printf("Nome: %s\n", dataset[meio].nome);
+//             printf("Ingredientes: %s\n", dataset[meio].ingredientes);
+//             printf("Ranking: %.1f\n", dataset[meio].ranking);
+//             printf("Origem: %s\n", dataset[meio].origem);
+//             printf("\n");
+//             return;
+//         }
+//         else if (dataset[meio].id < id_procurado)
+//         {
+//             inicio = meio + 1;
+//         }
+//         else
+//         {
+//             fim = meio - 1;
+//         }
+//     }
+//     printf("ID não encontrado.\n");
+// }
+
+void busca_binaria(pizzaDataset dataset[], int quantidade_elementos, int id_procurado)
+{
+    // Ordena o array antes de realizar a busca binária
+    selectionSort(dataset, quantidade_elementos);
+
+    int inicio = 0;
+    int meio;
+    int fim = quantidade_elementos - 1;
+
+    while (inicio <= fim)
+    {
+        meio = (inicio + fim) / 2;
+
+        if (dataset[meio].id == id_procurado)
+        {
+            printf("\nDados:\nID: %d\n", dataset[meio].id);
+            printf("Nome: %s\n", dataset[meio].nome);
+            printf("Ingredientes: %s\n", dataset[meio].ingredientes);
+            printf("Ranking: %.1f\n", dataset[meio].ranking);
+            printf("Origem: %s\n", dataset[meio].origem);
+            printf("\n");
+            return;
+        }
+        else if (dataset[meio].id < id_procurado)
+        {
+            inicio = meio + 1;
+        }
+        else
+        {
+            fim = meio - 1;
+        }
+    }
+    printf("ID não encontrado.\n");
+}
+
+
 void pesquisa_id(pizzaDataset dataset[], int id_procurado) // funcao para pesquisar pelo id passado pelo usuario, funcionando;
 {
     int i;
@@ -277,10 +347,13 @@ void pesquisa_id(pizzaDataset dataset[], int id_procurado) // funcao para pesqui
     }
 }
 
-void busca_id_origem(pizzaDataset dataset[], int entrada_id,char entrada_origem[]){
+void busca_id_origem(pizzaDataset dataset[], int entrada_id, char entrada_origem[])
+{
     int i;
-    for (i = 0; i < 30; i++){
-        if(dataset[i].id == entrada_id && strcmp(dataset[i].origem, entrada_origem) == 0){
+    for (i = 0; i < 30; i++)
+    {
+        if (dataset[i].id == entrada_id && strcmp(dataset[i].origem, entrada_origem) == 0)
+        {
             printf("\nDados:\nID: %d\n", dataset[i].id);
             printf("Nome: %s\n", dataset[i].nome);
             printf("Ingredientes: %s\n", dataset[i].ingredientes);
@@ -291,24 +364,22 @@ void busca_id_origem(pizzaDataset dataset[], int entrada_id,char entrada_origem[
     }
 }
 
-
-
 // funções funcionando, passar para cima, cuidar com a ordem, se a ficar muito ruim de gerenciar, talvez seja necessário colocar em outro arquivo.
 
-void limpa_buffer()                            //Essa função é responsável por limpar o buffer de entrada;
-{                                              //tentei utilizar o fflush, mas infelizmente não funcionou muito bem, em algumas horas funcionava
-                                              //e em outras dava erro, achando pouco confiável, acabei optando por procurar outra 
-                                              //alternativa para limpar o stdin;
-    int c;                                    //Encontrei essa função enquanto navegava no Stackoverflow, a pergunta respondida  era:
-    do {                                      // "Limpar buffer em C com fflush() ou __fpurge()" e "How can I clear an input buffer in C?"
-        c = getchar();                        
-    } while (c != '\n' && c != EOF);            //o EOF é um valor retornado por funções como fgets, ele existe para indicar o final de um arquivo ou entrada. 
-}                                             //As perguntas podem serem acessadas através dos seguintes links: 
-                                              //"Limpar buffer em C com fflush() ou __fpurge()"
-                                              //https://pt.stackoverflow.com/questions/111697/limpar-buffer-em-c-com-fflush-ou-fpurge
-                                              //"How can I clear an input buffer in C?"  
-                                              //https://stackoverflow.com/questions/7898215/how-can-i-clear-an-input-buffer-in-c
-
+void limpa_buffer() // Essa função é responsável por limpar o buffer de entrada;
+{                   // tentei utilizar o fflush, mas infelizmente não funcionou muito bem, em algumas horas funcionava
+                    // e em outras dava erro, achando pouco confiável, acabei optando por procurar outra
+                    // alternativa para limpar o stdin;
+    int c;          // Encontrei essa função enquanto navegava no Stackoverflow, a pergunta respondida  era:
+    do
+    { // "Limpar buffer em C com fflush() ou __fpurge()" e "How can I clear an input buffer in C?"
+        c = getchar();
+    } while (c != '\n' && c != EOF); // o EOF é um valor retornado por funções como fgets, ele existe para indicar o final de um arquivo ou entrada.
+} // As perguntas podem serem acessadas através dos seguintes links:
+  //"Limpar buffer em C com fflush() ou __fpurge()"
+  // https://pt.stackoverflow.com/questions/111697/limpar-buffer-em-c-com-fflush-ou-fpurge
+  //"How can I clear an input buffer in C?"
+  // https://stackoverflow.com/questions/7898215/how-can-i-clear-an-input-buffer-in-c
 
 void pesquisa_origem(pizzaDataset dataset[], char origem_procurada[]) // espero que funcione.
 {
@@ -379,10 +450,10 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
             entrada_origem[strcspn(entrada_origem, "\n")] = '\0'; // receberá os valores via teclado, em seguida usamos a função strcspn
             // para encontrar e trocar o \n por um caractere nulo. Obrigado pelas pesquisas Eu do passado!
 
-            //é, precisa implementar o limpa buffer antes; - Pedro. 
-            //Reaproveitar o código do zoologico - Pedro.
+            // é, precisa implementar o limpa buffer antes; - Pedro.
+            // Reaproveitar o código do zoologico - Pedro.
 
-            limpa_buffer(); // limpa o buffer de entrada, para evitar que interfira no scanf 
+            limpa_buffer(); // limpa o buffer de entrada, para evitar que interfira no scanf
 
             printf("Origem: %s\n\n", entrada_origem);
 
@@ -403,8 +474,7 @@ void selecionaOquePesquisar(pizzaDataset dataset[])
 
             busca_id_origem(dataset, entrada_id, entrada_origem);
 
-            limpa_buffer(); 
-
+            limpa_buffer();
 
             // Aqui você pode adicionar a lógica para pesquisa por ID e Origem
             break;
@@ -449,7 +519,7 @@ void apresentaMenu(pizzaDataset dataset[])
             imprime(dataset);
             break; // lembrar de quebrar o switch
 
-        case 2:
+        case 2:     
             printf("Metodo selecionado: Insertion Sort\n");
             printAntesDepois(dataset);
             ordena_Insercao(dataset, 30);
@@ -460,6 +530,16 @@ void apresentaMenu(pizzaDataset dataset[])
             printf("Metodo selecionado: Busca Sequencial\n");
             selecionaOquePesquisar(dataset); // função que pede ao usuário o que ele deseja pesquisar, está se tornando uma verdadeira toca de coelho
 
+            break;
+
+        case 4:
+            printf("Metodo selecionado: Busca Binária\n");
+            int entrada_id;
+            printf("Entre com o ID que deseja pesquisar: ");
+            scanf("%d", &entrada_id);
+            // Ordena o array antes de realizar a busca binária
+            selectionSort(dataset, 30);
+            busca_binaria(dataset, 30, entrada_id);
             break;
         }
 
